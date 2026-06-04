@@ -17,7 +17,6 @@ class PcaDetector:
         center_x = mean[0, 0]
         center_y = mean[0, 1]
         return center_x, center_y
-
     def detect_points(self, binary_mask: np.ndarray) -> list:
         detected_centers = []
         contours, _ = cv2.findContours(
@@ -36,4 +35,12 @@ class PcaDetector:
             center = self._compute_center_pca(roi, x1, y1)
             if center is not None:
                 detected_centers.append(center)
-        return detected_centers
+        pts = np.array(detected_centers)
+        y_vals = pts[:, 1]
+        low = np.percentile(y_vals, 5)
+        high = np.percentile(y_vals, 95)
+        filtered = [
+            tuple(p) for p in pts
+            if low <= p[1] <= high
+        ]
+        return filtered
