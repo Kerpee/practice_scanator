@@ -9,13 +9,8 @@ from utils.visual import Visualizer
 def main():
     grid_rows = 7
     grid_cols = 7
-    marker_step_mm = 35.0
-    binarizer = Binarizer(
-        tophat_ksize=21,
-        thresh_value=15,
-        min_area=35.0,
-        max_area=1200.0,
-    )
+    marker_step_mm = 25.0
+    binarizer = Binarizer()
     detector = PcaDetector(roi_padding=4)
     corrector = PerspectiveCorrector(
         grid_size=(grid_rows, grid_cols), actual_step_mm=marker_step_mm
