@@ -1,0 +1,6 @@
+{
+    "thresh_block_size": 27,
+    "thresh_c": -10,
+    "eps": 20,
+    "min_samples": 3
+}
