@@ -15,7 +15,7 @@ def main():
     corrector = PerspectiveCorrector(
         grid_size=(grid_rows, grid_cols), actual_step_mm=marker_step_mm
     )
-    visualizer = Visualizer(marker_color=(0, 255, 0), radius=6, thickness=2)
+    visualizer = Visualizer(marker_color=(0, 255, 0), radius=1, thickness=2)
     for i in range(1, 10):
         image_path = f"data/photo_{i}.jpg"
         img = cv2.imread(image_path)
@@ -24,6 +24,8 @@ def main():
         print(f"\nОбработка кадра: {image_path}")
         start_time = time.time()
         mask = binarizer.process(img)
+        gray_orig = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+        raw_pixel_points = detector.detect_points(mask, gray_orig)
         cv2.imshow(f"Final Calibration Lattice - Photo {i}", mask)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
