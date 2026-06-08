@@ -9,9 +9,9 @@ from utils.visual import Visualizer
 def main():
     grid_rows = 7
     grid_cols = 7
-    marker_step_mm = 25.0
+    marker_step_mm = 35.0
     binarizer = Binarizer()
-    detector = PcaDetector(roi_padding=4)
+    detector = PcaDetector(roi_padding=8)
     corrector = PerspectiveCorrector(
         grid_size=(grid_rows, grid_cols), actual_step_mm=marker_step_mm
     )
