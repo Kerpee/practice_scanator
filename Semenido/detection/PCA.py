@@ -94,30 +94,4 @@ class PcaDetector:
             if lambda1 == 0 or (lambda2 / lambda1) < 0.10:
                 continue
             detected_centers.append((px, py))
-        print(f"\n[DEBUG] Фиксация центров по осям градиентов. Итого: {len(detected_centers)}")
-        for idx, (px, py) in enumerate(detected_centers):
-            crop_w, crop_h = 24, 24
-            x_start = max(0, int(round(px)) - crop_w // 2)
-            y_start = max(0, int(round(py)) - crop_h // 2)
-            x_end = min(w_img, x_start + crop_w)
-            y_end = min(h_img, y_start + crop_h)
-            roi_gray = gray_img[y_start:y_end, x_start:x_end]
-            if roi_gray is None or roi_gray.size == 0 or roi_gray.shape[0] == 0 or roi_gray.shape[1] == 0:
-                continue
-            roi_color = cv2.cvtColor(roi_gray, cv2.COLOR_GRAY2BGR)
-            local_cx = px - x_start
-            local_cy = py - y_start
-            display_size = 480
-            roi_resized = cv2.resize(roi_color, (display_size, display_size), interpolation=cv2.INTER_NEAREST)
-            scale = display_size / float(roi_gray.shape[1])
-            view_cx = int(round(local_cx * scale))
-            view_cy = int(round(local_cy * scale))
-            cv2.circle(roi_resized, (view_cx, view_cy), 2, (0, 0, 255), -1)
-            cv2.line(roi_resized, (view_cx - 15, view_cy), (view_cx + 15, view_cy), (0, 0, 255), 1)
-            cv2.line(roi_resized, (view_cx, view_cy - 15), (view_cx, view_cy + 15), (0, 0, 255), 1)
-            cv2.imshow(f"Gradient Intersect - {idx + 1}", roi_resized)
-            key = cv2.waitKey(0)
-            cv2.destroyAllWindows()
-            if key == 27:
-                break
         return detected_centers

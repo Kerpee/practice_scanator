@@ -26,7 +26,7 @@ def main():
         mask = binarizer.process(img)
         gray_orig = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
         raw_pixel_points = detector.detect_points(mask, gray_orig)
-        cv2.imshow(f"Final Calibration Lattice - Photo {i}", mask)
+        cv2.imshow(f"Фото {i}", mask)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
         raw_pixel_points = detector.detect_points(mask)
@@ -44,7 +44,7 @@ def main():
         display_img = (
             cv2.resize(result_img, (w // 2, h // 2)) if w > 1920 else result_img
         )
-        cv2.imshow(f"Final Calibration Lattice - Photo {i}", display_img)
+        cv2.imshow(f"Фото {i}", display_img)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
 
