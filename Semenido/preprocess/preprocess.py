@@ -70,8 +70,6 @@ class Binarizer:
         contours, _ = cv2.findContours(
             full_binary_mask, cv2.RETR_EXTERNAL, cv2.CHAIN_APPROX_SIMPLE
         )
-        # Мы знаем, что на пластине 49 крестиков. Отрезаем всё, что физически
-        # несоразмерно калибровочному маркеру относительно площади всей доски.
         min_area = plate_area * 0.00005
         max_area = plate_area * 0.015
         for cnt in contours:
