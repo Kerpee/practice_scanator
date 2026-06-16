@@ -11,7 +11,7 @@ def main():
     grid_cols = 7
     marker_step_mm = 35.0
     binarizer = Binarizer()
-    detector = PcaDetector(roi_padding=8)
+    detector = PcaDetector(roi_size=15)
     corrector = PerspectiveCorrector(
         grid_size=(grid_rows, grid_cols), actual_step_mm=marker_step_mm
     )
@@ -29,7 +29,6 @@ def main():
         cv2.imshow(f"Фото {i}", mask)
         cv2.waitKey(0)
         cv2.destroyAllWindows()
-        raw_pixel_points = detector.detect_points(mask)
         pixel_points, mm_points = corrector.process_and_restore_grid(
             raw_pixel_points
         )
