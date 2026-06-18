@@ -16,7 +16,7 @@ class AppConfig:
     verbose: bool = False
     start_image: int = 1
     end_image: int = 10
-
+    cross_mode: str = "grid"
 
 class ConsoleInterface:
 
@@ -39,6 +39,8 @@ class ConsoleInterface:
             elif choice == "5":
                 self._edit_image_range()
             elif choice == "6":
+                self._edit_work()
+            elif choice == "7":
                 self._show_config()
             elif choice == "0":
                 break
@@ -53,7 +55,8 @@ class ConsoleInterface:
         print("3 - Настройки координатных систем")
         print("4 - Настройки отображения")
         print("5 - Диапазон изображений")
-        print("6 - Показать текущую конфигурацию")
+        print("6 - Изменить тип работы")
+        print("7 - Показать текущую конфигурацию")
         print("0 - Продолжить запуск")
 
 
@@ -112,6 +115,11 @@ class ConsoleInterface:
         v = input(f"End image [{cfg.end_image}]: ").strip()
         if v:
             cfg.end_image = int(v)
+    def _edit_work(self):
+        cfg=self.config
+        v = input(f"Cross mode (grid/single) [{cfg.cross_mode}]: ").strip()
+        if v:
+            cfg.cross_mode = v
     def _show_config(self):
         cfg = self.config
         print("\nТЕКУЩАЯ КОНФИГУРАЦИЯ\n")

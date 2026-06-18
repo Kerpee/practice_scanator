@@ -93,3 +93,46 @@ class PcaDetector:
                 )
             )
         return detected_points
+
+    def detect_single_cross_center(self, gray_img: np.ndarray):
+        if gray_img is None:
+            return None
+        img = gray_img.astype(np.float32)
+        dx = cv2.Sobel(img, cv2.CV_32F, 1, 0, ksize=3)
+        dy = cv2.Sobel(img, cv2.CV_32F, 0, 1, ksize=3)
+        mag = np.sqrt(dx * dx + dy * dy)
+        if np.max(mag) < 1e-6:
+            return None
+        mask = mag > (0.6 * np.max(mag))
+        if np.sum(mask) < 50:
+            return None
+        ys, xs = np.where(mask)
+        pts = np.column_stack((xs, ys)).astype(np.float32)
+        if len(pts) < 20:
+            return None
+        dx_v = dx[mask]
+        dy_v = dy[mask]
+        vert_mask = np.abs(dx_v) > np.abs(dy_v)
+        horiz_mask = ~vert_mask
+        vert_pts = pts[vert_mask]
+        horiz_pts = pts[horiz_mask]
+        if len(vert_pts) < 10 or len(horiz_pts) < 10:
+            return None
+        vx, vy, x0, y0 = cv2.fitLine(
+            vert_pts, cv2.DIST_L2, 0, 0.01, 0.01
+        )
+        hx, hy, x1, y1 = cv2.fitLine(
+            horiz_pts, cv2.DIST_L2, 0, 0.01, 0.01
+        )
+        vx, vy, x0, y0 = vx.item(), vy.item(), x0.item(), y0.item()
+        hx, hy, x1, y1 = hx.item(), hy.item(), x1.item(), y1.item()
+        A1, B1 = -vy, vx
+        C1 = -(A1 * x0 + B1 * y0)
+        A2, B2 = -hy, hx
+        C2 = -(A2 * x1 + B2 * y1)
+        det = A1 * B2 - A2 * B1
+        if abs(det) < 1e-6:
+            return None
+        cx = (B1 * C2 - B2 * C1) / det
+        cy = (C1 * A2 - C2 * A1) / det
+        return float(cx), float(cy)
