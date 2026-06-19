@@ -44,7 +44,8 @@ class ConsoleInterface:
                 self._show_config()
             elif choice == "0":
                 break
-
+            elif choice == "xd":
+                self._start_gui()
 
     def _print_menu(self):
         print("\n" + "=" * 60)
@@ -58,6 +59,7 @@ class ConsoleInterface:
         print("6 - Изменить тип работы")
         print("7 - Показать текущую конфигурацию")
         print("0 - Продолжить запуск")
+        print("xd - Запуск GUI")
 
 
     def _edit_grid(self):
