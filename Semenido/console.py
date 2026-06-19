@@ -59,7 +59,6 @@ class ConsoleInterface:
         print("6 - Изменить тип работы")
         print("7 - Показать текущую конфигурацию")
         print("0 - Продолжить запуск")
-        print("xd - Запуск GUI")
 
 
     def _edit_grid(self):
