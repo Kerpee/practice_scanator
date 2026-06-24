@@ -34,8 +34,6 @@ def detect_circled_points(binary_mask, grid_points):
             cv2.circle(debug_vis, (int(cx), int(cy)), 3, (0, 0, 255), -1)
         else:
             cv2.drawContours(debug_vis, [cnt], -1, (255, 0, 255), 2)
-    cv2.imshow("Detected Circles Debug", debug_vis)
-    cv2.waitKey(1)
     unique_centers = list(matched_grid_centers.keys())
     print(f"DEBUG: Итоговых уникальных маркеров для СК: {len(unique_centers)}")
     return unique_centers
