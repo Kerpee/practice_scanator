@@ -245,22 +245,15 @@ python console.py
 python main.py --save-images --save-coords --output-dir my_results
 ```
 
-### 3. Обработка из консоли
-
-```
-python console.py
-```
-# Выбрать пункт 6 -Изменение работы
-# Указать путь к папке с изображениями
 
 
-### 4. Запуск с пользовательской конфигурацией
+### 3. Запуск с пользовательской конфигурацией
 
 ```
 python main.py --config my_config.json --gui
 ```
 
-### 5. Быстрая обработка без интерфейса
+### 4. Быстрая обработка без интерфейса
 
 ```
 python main.py --fast --no-ui
