@@ -31,8 +31,9 @@
 ## Установка
 
 # Установка зависимостей
+```
 pip install -r requirements.txt
-
+```
 ## Структура проекта
 
 
@@ -85,7 +86,7 @@ project/
 
 ### Файл конфигурации (config.json)
 
-
+```
 {
   "grid_rows": 7,
   "grid_cols": 7,
@@ -106,38 +107,38 @@ project/
   "save_coords": false,
   "output_dir": "output"
 }
-
+```
 
 ## Запуск
 
 ### Консольный интерфейс (рекомендуется)
-
+```
 
 python console.py
 
-
+```
 ### Графический интерфейс
 
-
+```
 python main.py --gui
-
+```
 ### Быстрый запуск
 
-
+```
 python main.py --fast
-
+```
 
 ### С загрузкой конфигурации
 
-
+```
 python main.py --config config.json
-
+```
 
 ### С сохранением результатов
 
-
+```
 python main.py --save-images --save-coords --output-dir results
-
+```
 
 ## Интерфейсы
 
@@ -199,17 +200,17 @@ output/                          # Корневая папка результа�
 
 ### Формат CSV файла
 
-
+```
 Image,Point_Type,ID,X,Y
 1,grid_point,0,100.5,200.3
 1,grid_point,1,135.7,200.1
 1,origin,0,100.5,200.3
 1,x_axis,0,135.7,200.1
 1,y_axis,0,100.5,235.9
-
+```
 
 ### Формат JSON файла
-
+```
 
 {
   "image": "1",
@@ -227,41 +228,43 @@ Image,Point_Type,ID,X,Y
   ],
   "processing_time": 0.456
 }
-
+```
 
 ## Примеры использования
 
 ### 1. Интерактивная работа
-
+```
 python console.py
+```
 # Выбор пунктов меню для настройки и запуска
 
 
 ### 2. Обработка с сохранением результатов
 
-
+```
 python main.py --save-images --save-coords --output-dir my_results
+```
 
+### 3. Обработка из консоли
 
-### 3. Пакетная обработка из консоли
-
-
+```
 python console.py
-# Выбрать пункт 6 - Пакетная обработка
+```
+# Выбрать пункт 6 -Изменение работы
 # Указать путь к папке с изображениями
 
 
 ### 4. Запуск с пользовательской конфигурацией
 
-
+```
 python main.py --config my_config.json --gui
-
+```
 
 ### 5. Быстрая обработка без интерфейса
 
-
+```
 python main.py --fast --no-ui
-
+```
 
 ## Устранение неполадок
 
