@@ -50,12 +50,12 @@ def run_optimization(data_dir: str, output_json: str = "best_params.json"):
     print(f"Найдено {len(images)} изображений для авто-тюнинга.")
     print("Запуск оптимизации (Grid Search). Пожалуйста, подождите...")
     
-    # Сетка параметров для перебора
+    # Увеличенная сетка параметров для перебора
     param_grid = {
-        'thresh_block_size': [15, 21, 27, 35],  # Должны быть нечетными
-        'thresh_c': [-5, -10, -15, -20],
-        'eps': [10, 15, 20],
-        'min_samples': [3, 5, 7]
+        'thresh_block_size': [11, 15, 21, 27, 35, 45],  # Должны быть нечетными
+        'thresh_c': [0, -5, -10, -15, -20, -25],
+        'eps': [10, 15, 20, 25],
+        'min_samples': [2, 3, 5, 7]
     }
     
     keys, values = zip(*param_grid.items())
