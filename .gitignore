@@ -10,3 +10,11 @@ env.bak/
 venv.bak/
 .idea/
 .vscode/
+
+# Ignore local datasets and results
+ML/results/
+ML/templates/
+ML/dataset/
+ML/dataset_realistic/
+ML/runs/
+data/
