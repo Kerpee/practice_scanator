@@ -1,3 +1,10 @@
+"""
+Скрипт train_yolo.py
+--------------------
+Запускает процесс обучения нейросети YOLOv8 (yolov8n.pt) на сгенерированном реалистичном датасете.
+После завершения обучения сохраняет лучшую модель в папку runs/detect/cross_detector/weights/.
+"""
+
 from ultralytics import YOLO
 import os
 

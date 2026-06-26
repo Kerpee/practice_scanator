@@ -1,3 +1,11 @@
+"""
+Скрипт optimizer.py
+-------------------
+Выполняет автоматический подбор (Grid Search) наилучших параметров (thresh_block_size, thresh_c, eps, min_samples) 
+для алгоритма кластеризации (если используется старый пайплайн без YOLO).
+Сохраняет найденные лучшие параметры в файл best_params.json.
+"""
+
 import os
 import glob
 import itertools

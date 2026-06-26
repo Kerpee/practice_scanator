@@ -1,3 +1,11 @@
+"""
+Скрипт generate_dataset.py
+--------------------------
+Генерирует синтетический датасет с нарисованными крестиками на градиентном фоне.
+Формирует структуру папок (images/train, images/val, labels/train, labels/val)
+и создает файл конфигурации dataset.yaml для обучения модели YOLO.
+"""
+
 import cv2
 import numpy as np
 import os

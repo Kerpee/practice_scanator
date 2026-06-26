@@ -1,3 +1,13 @@
+"""
+Скрипт mlka.py
+--------------
+Основной модуль логики машинного обучения. Содержит:
+- HybridYoloDetector: класс для первичного поиска крестов (YOLO) и уточнения их центра (OpenCV Moments).
+- ResultVisualizer: класс для отрисовки найденных точек и рамок на изображении.
+- LocalizationEvaluator: класс для вычисления метрики ошибки (стандартного отклонения расстояний).
+- ScannerCalibrationApp: основное приложение, объединяющее пайплайн распознавания и сохранения.
+"""
+
 import cv2
 import numpy as np
 import time
@@ -13,6 +23,8 @@ class HybridYoloDetector:
     2. OpenCV Moments для нахождения точного субпиксельного центра внутри рамки.
     """
     def __init__(self, model_path: str = 'model.pt', conf: float = 0.25):
+        if model_path == 'model.pt':
+            model_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'model.pt')
         if not os.path.exists(model_path):
             raise FileNotFoundError(f"Модель YOLO не найдена по пути: {model_path}. Сначала дождитесь окончания обучения!")
         
@@ -138,7 +150,7 @@ class ScannerCalibrationApp:
         self.visualizer = ResultVisualizer()
         self.evaluator = LocalizationEvaluator()
         
-    def run(self, image_path: str, output_img: str = None, output_csv: str = None) -> dict:
+    def run(self, image_path: str, output_img: str = None, output_csv: str = None, output_json: str = None) -> dict:
         if not self.detector:
             raise RuntimeError("YOLO Модель не загружена. Дождитесь конца обучения!")
             
@@ -166,6 +178,9 @@ class ScannerCalibrationApp:
             os.makedirs(cords_dir, exist_ok=True)
             output_csv = os.path.join(cords_dir, base_name.replace(".jpg", f"_coords_hybrid.csv"))
             
+        if output_json is None:
+            output_json = output_csv.replace('.csv', '.json')
+            
         self.visualizer.draw_results(img, points, output_img)
         
         with open(output_csv, mode='w', newline='', encoding='utf-8') as f:
@@ -174,6 +189,20 @@ class ScannerCalibrationApp:
             # Сохраняем с точностью до 4 знаков после запятой (субпиксельная точность!)
             for p in points:
                 writer.writerow([f"{p[0]:.4f}", f"{p[1]:.4f}"])
+                
+        import datetime
+        import json
+        json_data = {
+            "image": base_name,
+            "mode": "hybrid",
+            "timestamp": datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+            "points_found": len(points),
+            "points": [[round(p[0], 4), round(p[1], 4)] for p in points],
+            "processing_time": round(process_time, 4),
+            "error_std": round(error, 4)
+        }
+        with open(output_json, 'w', encoding='utf-8') as f:
+            json.dump(json_data, f, indent=4)
                 
         return {
             'found': len(points) == 49,

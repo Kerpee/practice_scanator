@@ -1,4 +1,11 @@
 #!/usr/bin/env python3
+"""
+Скрипт cli.py
+-------------
+Интерфейс командной строки для запуска гибридного детектора кросс-меток (YOLO + OpenCV).
+Позволяет передать путь к изображению или папке (--input) и указать папку для результатов (--output).
+Сохраняет визуализацию и CSV-файлы с координатами меток.
+"""
 
 import argparse
 import os
@@ -49,10 +56,11 @@ def main():
 
     for idx, path in enumerate(image_files, 1):
         base_name = os.path.splitext(os.path.basename(path))[0]
-        out_img = os.path.join(run_output_dir, f"{base_name}_hybrid.jpg")
-        out_csv = os.path.join(run_output_dir, f"{base_name}_coords_hybrid.csv")
+        out_img = os.path.join(run_output_dir, f"{base_name}_result.jpg")
+        out_csv = os.path.join(run_output_dir, f"{base_name}_result.csv")
+        out_json = os.path.join(run_output_dir, f"{base_name}_result.json")
         
-        result = app.run(path, output_img=out_img, output_csv=out_csv)
+        result = app.run(path, output_img=out_img, output_csv=out_csv, output_json=out_json)
         
         print(f"[{idx}/{len(image_files)}] {base_name} | Меток: {result['points_count']} | Ошибка (STD): {result['error']:.3f} | {result['time']:.2f} сек")
 
